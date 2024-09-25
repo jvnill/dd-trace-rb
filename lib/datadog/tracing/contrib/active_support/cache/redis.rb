@@ -32,6 +32,7 @@ module Datadog
                 if patch_redis?(meth)
                   [::ActiveSupport::Cache::RedisStore, ::ActiveSupport::Cache::Store]
                 elsif Gem.loaded_specs['redis'] && defined?(::ActiveSupport::Cache::RedisCacheStore) \
+                    && Gem.loaded_specs['redis'].version >= Gem::Version.new('4.0.1') \
                     && ::ActiveSupport::Cache::RedisCacheStore.instance_methods(false).include?(meth)
                   [::ActiveSupport::Cache::RedisCacheStore, ::ActiveSupport::Cache::Store]
                 else
